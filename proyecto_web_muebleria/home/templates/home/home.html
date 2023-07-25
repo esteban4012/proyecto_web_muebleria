@@ -1,0 +1,23 @@
+{% extends "proyecto_web_muebleria/base.html" %}
+
+{% block body %}
+<div class="card text-center">
+    <div class="card-body">
+    <h5 class="card-title">Muebles Agudelo</h5>
+    <p class="card-text">sistema de control para negocio</p>
+    <a href="{% url 'clientes:clientes' %}" class="btn btn-primary d-grid gap-2 col-2 mx-auto ">clientes</a>
+    </div>
+    <div class="card-body">
+        <a href="{% url 'categorias:categorias' %}" class="btn btn-primary d-grid gap-2 col-2 mx-auto">categorias</a>
+    </div>
+    <div class="card-body">
+        <a href="{% url 'elementos:elementos' %}" class="btn btn-primary d-grid gap-2 col-2 mx-auto">elementos</a>
+    </div>
+    <div class="card-body" >
+        <a href="{% url 'ordenes:ordenes' %}" class="btn btn-primary d-grid gap-2 col-2 mx-auto">ordenes</a>
+    </div>
+    <div class="card-body">
+        <a href="{% url 'movimientos:movimientos' %}" class="btn btn-primary d-grid gap-2 col-2 mx-auto">movimientos</a>
+    </div>
+</div>
+{% endblock %}

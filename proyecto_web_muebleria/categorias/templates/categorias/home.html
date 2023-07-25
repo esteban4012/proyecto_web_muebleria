@@ -1,0 +1,55 @@
+{% extends "proyecto_web_muebleria/base.html" %}
+
+{% block body %}
+<nav class="navbar bg-body-tertiary">
+    <div class="container-fluid">
+      <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Buscar</button>
+      </form>
+    </div>
+</nav>
+<div class="row">
+    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
+        <h2>Crear Categorias</h2>
+        <div class="card">
+            <div class="card-body">
+                <form action="/categorias/home/crearCategoria/" method="post"> {% csrf_token %}
+                    
+                    <div class="form-group">
+                        <input type="text" id="textDescripcion" name="textDescripcion" class="form-control" placeholder="Descripcion"  maxlength="100" required>
+                    </div>
+                
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-success btn-block text-white">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-6 col-lg-8 col-xl-9">
+        <div class="table-responsive py-2">
+            <div class="text-center"><h1>Lista de Categorias</h1></div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>Descripcion</th>
+                        <th colspan="2">opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for c in categorias %}
+                    <tr>
+                        <td>{{c.id}}</td>
+                        <td>{{c.descripcion}}</td>
+                        <td><a href="editarCategoria/{{c.id}}" class="btn btn-primary">editar</a></td>
+                        <td><a href="eleminarCategoria/{{c.id}}" class="btn btn-danger">eliminar</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

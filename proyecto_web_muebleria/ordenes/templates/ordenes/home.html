@@ -1,0 +1,68 @@
+{% extends "proyecto_web_muebleria/base.html" %}
+
+{% block body %}
+<nav class="navbar bg-body-tertiary">
+    <div class="container-fluid">
+      <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Buscar</button>
+      </form>
+    </div>
+</nav>
+<div class="row">
+    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+        <h2>Crear Ordenes</h2>
+        <div class="card">
+            <div class="card-body">
+                <form action="/ordenes/home/crearOrden/" method="post"> {% csrf_token %}
+                   
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="fecha">Fecha:</label>
+                        <input class="form-control" type="date" id="fecha" name="fecha">
+                    </div>
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="inputGroupSelect01">clientes</label>
+                        <select class="form-select" id="idCliente" name="idCliente" required>
+                            <option selected>selecionar</option>
+                            {% for cliente in clientes %}
+                                <option value="{{ cliente.id }}">{{ cliente }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                        
+                    
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-success btn-block text-white">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
+        <div class="table-responsive py-2">
+            <h1>Lista de Ordenes</h1>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>Fecha</th>
+                        <th>Cliente</th>
+                        <th colspan="2">opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for o in ordenes %}
+                    <tr>
+                        <td>{{o.id}}</td>
+                        <td>{{o.fecha}}</td>
+                        <td>{{o.id_cliente}}</td>
+                        <td><a href="editarOrden/{{o.id}}" class="btn btn-primary">editar</a></td>
+                        <td><a href="eliminarOrden/{{o.id}}" class="btn btn-danger">eliminar</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

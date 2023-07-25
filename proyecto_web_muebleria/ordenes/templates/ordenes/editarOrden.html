@@ -1,0 +1,38 @@
+{% extends "proyecto_web_muebleria/base.html" %}
+
+{% block body %}
+
+<div class="row">
+    <div class="col-md-4 offset-md-4">
+        <div class="text-center"><h2>Editar Ordenes</h2></div>
+        <div class="card">
+            <div class="card-body">
+                <form action="/ordenes/home/edicionOrden/" method="post"> {% csrf_token %}
+                    <div class="form-group">
+                        <input type="text" id="numId" name="numId" value="{{orden.id}}" class="form-control"  readonly required>
+                    </div>
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="fecha">Fecha:</label>
+                        <input class="form-control" type="date" id="fecha" name="fecha">
+                    </div>
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="inputGroupSelect01">clientes</label>
+                        <select class="form-select" id="idCliente" name="idCliente" required>
+                            <option selected>selecionar</option>
+                            {% for cliente in clientes %}
+                                <option value="{{ cliente.id }}">{{ cliente }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                        
+                    
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-success btn-block text-white">Guardar</button>
+                    </div>
+                   
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,85 @@
+{% extends "proyecto_web_muebleria/base.html" %}
+
+{% block body %}
+<nav class="navbar bg-body-tertiary">
+    <div class="container-fluid">
+      <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Buscar</button>
+      </form>
+    </div>
+</nav>
+<div class="row">
+    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
+        <h2>Crear Clientes</h2>
+        <div class="card">
+            <div class="card-body">
+                <form action="/clientes/clientes/registrarCliente/" method="post"> {% csrf_token %}
+                    
+                    <div class="form-group">
+                        <input type="text" id="textNombre" name="textNombre" class="form-control" placeholder="Nombre"  maxlength="100" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="textApellido" name="textApellido" class="form-control" placeholder="Apellido"  maxlength="100" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="textApellido2" name="textApellido2" class="form-control" placeholder="Apellido 2"  maxlength="100" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="numId" name="numId" class="form-control" placeholder="Numero Identificacion"  maxlength="100" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="textDireccion" name="textDireccion" class="form-control" placeholder="Direccion"  maxlength="100" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="numTelefono" name="numTelefono" class="form-control" placeholder="Telefono"  min="1" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="textCorreo" name="textCorreo" class="form-control" placeholder="Correo"  maxlength="100" required>
+                    </div>
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-success btn-block text-white">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-6 col-lg-8 col-xl-9">
+        <div class="table-responsive py-2">
+            <h1>Lista de Clientes</h1>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>Nombre</th>
+                        <th>Apellido1</th>
+                        <th>Apellido2</th>
+                        <th>Numero Identificacion</th>
+                        <th>Direccion</th>
+                        <th>Telefono</th>
+                        <th>Correo</th>
+                        <th colspan="2">opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for c in cliente %}
+                    <tr>
+                        <td>{{c.id}}</td>
+                        <td>{{c.nombre}}</td>
+                        <td>{{c.apellido}}</td>
+                        <td>{{c.apellido_2}}</td>
+                        <td>{{c.numero_identificacion}}</td>
+                        <td>{{c.direccion}}</td>
+                        <td>{{c.telefono}}</td>
+                        <td>{{c.correo}}</td>
+
+                        <td><a href="editarCliente/{{c.id}}" class="btn btn-primary">editar</a></td>
+                        <td><a href="eliminarCliente/{{c.id}}" class="btn btn-danger">eliminar</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

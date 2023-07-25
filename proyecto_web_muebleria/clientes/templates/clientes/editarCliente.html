@@ -1,0 +1,42 @@
+{% extends "proyecto_web_muebleria/base.html" %}
+
+{% block body %}
+<div class="row">
+    <div class="col-md-4 offset-md-4">
+        <div class="text-center"><h2>Editar Cliente</h2></div>
+        <div class="card">
+            <div class="card-body">
+                <form action="/clientes/clientes/edicionCliente/" method="post"> {% csrf_token %}
+                    
+                    <div class="form-group">
+                        <input type="text" id="numid" name="numid" value="{{cliente.id}}" class="form-control" placeholder="id"  maxlength="100" readonly required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="textNombre" name="textNombre" class="form-control" placeholder="Nombre"  maxlength="100" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="textApellido" name="textApellido" class="form-control" placeholder="Apellido"  maxlength="100" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="textApellido2" name="textApellido2" class="form-control" placeholder="Apellido 2"  maxlength="100" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="numId" name="numId" class="form-control" placeholder="Numero Identificacion"  maxlength="100" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="textDireccion" name="textDireccion" class="form-control" placeholder="Direccion"  maxlength="100" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="numTelefono" name="numTelefono" class="form-control" placeholder="Telefono"  min="1" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="textCorreo" name="textCorreo" class="form-control" placeholder="Correo"  maxlength="100" required>
+                    </div>
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-success btn-block text-white">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
