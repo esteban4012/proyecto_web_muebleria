@@ -24,7 +24,7 @@ urlpatterns = [
     path('elementos/', include('elementos.urls' , namespace = 'elementos')),
     path('ordenes/', include('ordenes.urls', namespace = 'ordenes')),
     path('movimientos/', include('movimientos.urls', namespace = 'movimientos')),
-    path('', include('home.urls')),
+    path('', include('home.urls', namespace='home')),
     
 
 ]
