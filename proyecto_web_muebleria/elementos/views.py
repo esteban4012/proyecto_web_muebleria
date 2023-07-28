@@ -2,6 +2,9 @@ from django.shortcuts import render, redirect
 
 from .models import Elementos,Categoria
 
+
+
+
 # Create your views here.
 
 def home(request):
@@ -49,3 +52,5 @@ def eliminarElemento(request, id):
     elemento = Elementos.objects.get(id = id)
     elemento.delete()
     return redirect('/elementos/home')
+
+
