@@ -6,6 +6,8 @@ from clientes.models import Cliente
 
 from elementos.models import Elementos
 
+from django.db.models import Q
+
 # Create your views here.
 
 
@@ -56,3 +58,17 @@ def eliminarOrden(request, id):
     orden = Orden.objects.get(id = id)
     orden.delete()
     return redirect('/ordenes/home')
+
+def listarOrdenes(request):
+
+    busqueda = request.GET.get('buscar')
+
+    if busqueda:
+
+        orden = Orden.objects.filter(
+            Q(id_cliente__nombre = busqueda)
+        ).distinct()
+
+    else:
+        orden = Orden.objects.all()
+    return render(request, 'ordenes/home.html', {'ordenes': orden})
