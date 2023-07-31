@@ -2,6 +2,8 @@ from django.shortcuts import render,redirect
 
 from .models import Cliente
 
+from django.db.models import Q
+
 # Create your views here.
 
 def home(request):
@@ -55,6 +57,18 @@ def edicionCliente(request):
     cliente.save()
     return redirect('/clientes/clientes')
 
+def listarClientes(request):
 
+    busqueda = request.GET.get('buscar')
+    
 
-
+    if busqueda:
+        clientes = Cliente.objects.filter(
+            Q(nombre__icontains = busqueda) |
+            Q(apellido__icontains = busqueda) |
+            Q(numero_identificacion__icontains = busqueda)
+        ).distinct()
+        
+    else:
+        clientes = Cliente.objects.all()
+    return render(request,'clientes/home.html',{"cliente" : clientes})

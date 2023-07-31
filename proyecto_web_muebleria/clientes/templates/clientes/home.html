@@ -3,8 +3,8 @@
 {% block body %}
 <nav class="navbar bg-body-tertiary">
     <div class="container-fluid">
-      <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search">
+      <form class="d-flex" role="search" method="get" action="/clientes/clientes/listarClientes/">
+        <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search" name="buscar" value="{{request.GET.buscar}}">
         <button class="btn btn-outline-success" type="submit">Buscar</button>
       </form>
     </div>
@@ -73,8 +73,13 @@
                         <td>{{c.telefono}}</td>
                         <td>{{c.correo}}</td>
 
-                        <td><a href="editarCliente/{{c.id}}" class="btn btn-primary">editar</a></td>
-                        <td><a href="eliminarCliente/{{c.id}}" class="btn btn-danger btnEliminacion">eliminar</a></td>
+                        {% if request.GET.buscar %}
+                        <td><a href="{% url 'clientes:editar_cliente' c.id %}?buscar={{ request.GET.buscar }}" class="btn btn-primary">editar</a></td>
+                        <td><a href="{% url 'clientes:eliminar_cliente' c.id %}?buscar={{ request.GET.buscar }}" class="btn btn-danger btnEliminacion">eliminar</a></td>
+                        {% else %}
+                        <td><a href="{% url 'clientes:editar_cliente' c.id %}" class="btn btn-primary">editar</a></td>
+                        <td><a href="{% url 'clientes:eliminar_cliente' c.id %}" class="btn btn-danger btnEliminacion">eliminar</a></td>
+                        {% endif %}
                     </tr>
                     {% endfor %}
                 </tbody>

@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 
 from .models import Elementos,Categoria
 
-
+from django.db.models import Q
 
 
 # Create your views here.
@@ -54,3 +54,16 @@ def eliminarElemento(request, id):
     return redirect('/elementos/home')
 
 
+def listarElemento(request):
+
+    busqueda = request.GET.get('buscar')
+
+    if busqueda:
+        elemento  =  Elementos.objects.filter(
+            Q(descripcion__icontains = busqueda)
+
+        ).distinct()
+
+    else:
+        elemento  = Elementos.objects.all()
+    return render(request, 'elementos/home.html', {'elementos': elemento})

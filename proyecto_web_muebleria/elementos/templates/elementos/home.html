@@ -3,8 +3,8 @@
 {% block body %}
 <nav class="navbar bg-body-tertiary">
     <div class="container-fluid">
-      <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search">
+      <form class="d-flex" role="search" method="get" action="/elementos/home/listarElemento/">
+        <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search", name="buscar", value="{{request.GET.buscar}}">
         <button class="btn btn-outline-success" type="submit">Buscar</button>
       </form>
     </div>
@@ -58,9 +58,13 @@
                         <td>{{e.descripcion}}</td>
                         <td>{{e.precio}}</td>
                         <td>{{e.id_categoria}}</td>
-
-                        <td><a href="editarElemento/{{e.id}}" class="btn btn-primary">editar</a></td>
-                        <td><a href="eliminarElemento/{{e.id}}" class="btn btn-danger btnEliminacion">eliminar</a></td>
+                        {% if request.GET.buscar %}
+                            <td><a href="{% url 'elementos:editar_elemento' e.id %}?buscar={{request.GET.buscar}}" class="btn btn-primary">Editar</a></td>
+                            <td><a href="{% url 'elementos:eliminar_elemento' e.id %}?buscar={{request.GET.buscar}}" class="btn btn-danger btnEliminacion">Eliminar</a></td>
+                        {% else %}
+                            <td><a href="{% url 'elementos:editar_elemento' e.id %}" class="btn btn-primary">Editar</a></td>
+                            <td><a href="{% url 'elementos:eliminar_elemento' e.id %}" class="btn btn-danger btnEliminacion">Eliminar</a></td>
+                        {% endif %}
                     </tr>
                     {% endfor %}
                 </tbody>
