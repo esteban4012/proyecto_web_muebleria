@@ -16,7 +16,7 @@ def crearElemento(request):
     
     descripcion = request.POST['textDescripcion']
     precio = request.POST['numPrecio']
-    id_categoria = request.POST['textCategoria']
+    id_categoria = request.POST['selectCategoria']
 
     try:
         categoria_obj = Categoria.objects.get(pk=id_categoria)
