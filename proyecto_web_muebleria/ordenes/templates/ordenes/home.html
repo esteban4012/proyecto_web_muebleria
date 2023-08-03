@@ -1,59 +1,68 @@
 {% extends "proyecto_web_muebleria/base.html" %}
 
 {% block body %}
-<nav class="navbar bg-body-tertiary">
-    <div class="container-fluid">
-      <form class="d-flex" role="search" method="get" action="/ordenes/home/listarOrden/">
-        <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search" name="buscar" value="{{request.GET.buscar}}">
-        <button class="btn btn-outline-success" type="submit">Buscar</button>
-      </form>
-    </div>
-</nav>
+
 <div class="row">
-    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
-        <h2>Crear Ordenes</h2>
+    <div class="col-md-6 offset-md-3">
+        <div class="text-center"><h2>Crear Ordenes</h2></div>
         <div class="card">
             <div class="card-body">
-                <form action="/ordenes/home/crearOrden/" method="post"> {% csrf_token %}
-                   <div class="input-group mb-3">
+                <form action="/ordenes/home/crearOrden/" method="post" id="formularioOrden"> {% csrf_token %}
+                    <div class="input-group mb-3">
                         <label class="input-group-text" for="fecha">Fecha:</label>
                         <input class="form-control" type="date" id="fecha" name="fecha">
                     </div>
-                    <div class="input-group mb-3">
-                        <label class="input-group-text" for="inputGroupSelect01">Elemento</label>
-                        <select class="form-select" id="idElemento" name="idElemento" required>
-                            <option selected>selecionar</option>
-                            {% for e in elemento %}
-                                <option value="{{ e.id }}">{{ e }}</option>
-                            {% endfor %}
-                        </select>
+                    <div id="contenedorElementos">
+                        <div class="input-group input-group-elemento">
+                            <label class="input-group-text" for="inputGroupSelect01">Elemento</label>
+                            <select class="form-select js-example-basic-single" name="idElemento" required>
+                                <option value="">Seleccionar</option>
+                                {% for e in elemento %}
+                                    <option value="{{ e.id }}">{{ e }}</option>
+                                {% endfor %}
+                            </select>
+
+                            <input type="number" name="numCantidad" class="form-control" placeholder="Cantidad" min="1" required>
+                            <div class="input-group-append">
+                                <button type="button" class="btn btn-outline-secondary btnEliminarElemento">Eliminar</button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="input-group mb-3">
-                        <input type="number" id="numCantidad" name="numCantidad" class="form-control" placeholder="Cantidad"  min="1" required>
+
+                    <div class="input-group mt-2">
+                        <button type="button" class="btn btn-outline-secondary" id="btnAgregarElemento">Agregar Elemento</button>
                     </div>
-                    
+
                     <div class="form-group">
-                        <input type="number" id="numValor" name="numValor" class="form-control" placeholder="Valor Total"  min="1" required>
+                        <input type="number" id="numValor" name="numValor" class="form-control" placeholder="Valor Total" min="1" required>
                     </div>
                     <div class="input-group mb-3">
-                        <label class="input-group-text" for="inputGroupSelect01">clientes</label>
-                        <select class="form-select" id="idCliente" name="idCliente" required>
-                            <option selected>selecionar</option>
+                        <label class="input-group-text" for="inputGroupSelect01">Clientes</label>
+                        <select class="form-select js-example-basic-single" name="idCliente" required>
+                            <option value="">Seleccionar</option>
                             {% for cliente in clientes %}
                                 <option value="{{ cliente.id }}">{{ cliente }}</option>
                             {% endfor %}
                         </select>
                     </div>
-                        <div class="d-grid gap-2">
+                    <div class="d-grid gap-2">
                         <button type="submit" class="btn btn-success btn-block text-white">Guardar</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-    <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
+    <nav class="navbar bg-body-tertiary">
+        <div class="container-fluid">
+            <form class="d-flex" role="search" method="get" action="/ordenes/home/listarOrden/" id="formularioOrden">
+                <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search" name="buscar" value="{{request.GET.buscar}}">
+                <button class="btn btn-outline-success" type="submit">Buscar</button>
+            </form>
+        </div>
+    </nav>
+    <div class="col-md-12">
         <div class="table-responsive py-2">
-            <h1>Lista de Ordenes</h1>
+            <div class="text-center"><h1>Lista de Ordenes</h1></div>
             <table class="table table-striped">
                 <thead>
                     <tr>
@@ -77,18 +86,63 @@
                         <td>{{o.id_cliente}}</td>
 
                         {% if request.GET.buscar %}
-                            <td><a href="{% url 'ordenes:editar_orden' o.id %}?buscar={{request.GET.buscar}}" class="btn btn-primary">Editar</a></td>
-                            <td><a href="{% url 'ordenes:eliminar_orden' o.id %}?buscar={{request.GET.buscar}}" class="btn btn-danger btnEliminacion">Eliminar</a></td>
+                        <td><a href="{% url 'ordenes:editar_orden' o.id %}?buscar={{request.GET.buscar}}" class="btn btn-primary">Editar</a></td>
+                        <td><a href="{% url 'ordenes:eliminar_orden' o.id %}?buscar={{request.GET.buscar}}" class="btn btn-danger btnEliminacion">Eliminar</a></td>
                         {% else %}
-                            <td><a href="{% url 'ordenes:editar_orden' o.id %}" class="btn btn-primary">Editar</a></td>
-                            <td><a href="{% url 'ordenes:eliminar_orden' o.id %}" class="btn btn-danger btnEliminacion">Eliminar</a></td>
+                        <td><a href="{% url 'ordenes:editar_orden' o.id %}" class="btn btn-primary">Editar</a></td>
+                        <td><a href="{% url 'ordenes:eliminar_orden' o.id %}" class="btn btn-danger btnEliminacion">Eliminar</a></td>
                         {% endif %}
-                        </tr>
+                    </tr>
                     {% endfor %}
                 </tbody>
             </table>
         </div>
     </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.js-example-basic-single').select2();
+
+        const btnAgregarElemento = document.getElementById('btnAgregarElemento');
+        const formulario = document.getElementById('formularioOrden');
+        let contadorSelect = 1;
+
+        btnAgregarElemento.addEventListener('click', function() {
+            agregarElemento();
+        });
+
+        function agregarElemento() {
+            const contenedorElementos = document.getElementById('contenedorElementos');
+            const nuevoElemento = document.createElement('div');
+            nuevoElemento.className = 'input-group input-group-elemento';
+
+            nuevoElemento.innerHTML = `
+                <label class="input-group-text" for="inputGroupSelect01">Elemento</label>
+                <select class="form-select js-example-basic-single" name="idElemento" required>
+                    <option value="">Seleccionar</option>
+                    {% for e in elemento %}
+                        <option value="{{ e.id }}">{{ e }}</option>
+                    {% endfor %}
+                </select>
+
+                <input type="number" name="numCantidad" class="form-control" placeholder="Cantidad" min="1" required>
+                <div class="input-group-append">
+                    <button type="button" class="btn btn-outline-secondary btnEliminarElemento">Eliminar</button>
+                </div>
+            `;
+
+            contenedorElementos.appendChild(nuevoElemento);
+
+            // Inicializar el nuevo select2
+            $('.js-example-basic-single').select2();
+        }
+
+        $(document).on('click', '.btnEliminarElemento', function() {
+            $(this).closest('.input-group-elemento').remove();
+        });
+    });
+</script>
 
 {% endblock %}

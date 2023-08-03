@@ -11,4 +11,4 @@ class Elementos(models.Model):
     id_categoria = models.ForeignKey(Categoria,on_delete=models.CASCADE)
 
     def __str__(self) -> str:
-        return f" {self.descripcion}"
+        return f" {self.descripcion} {self.precio}"
