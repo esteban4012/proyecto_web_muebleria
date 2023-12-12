@@ -23,15 +23,11 @@
                             </select>
 
                             <input type="number" name="numCantidad" class="form-control" placeholder="Cantidad" min="1" required>
-                            <div class="input-group-append">
-                                <button type="button" class="btn btn-outline-secondary btnEliminarElemento">Eliminar</button>
-                            </div>
+                            
                         </div>
                     </div>
 
-                    <div class="input-group mt-2">
-                        <button type="button" class="btn btn-outline-secondary" id="btnAgregarElemento">Agregar Elemento</button>
-                    </div>
+                    
 
                     <div class="form-group">
                         <input type="number" id="numValor" name="numValor" class="form-control" placeholder="Valor Total" min="1" required>
@@ -99,50 +95,13 @@
         </div>
     </div>
 </div>
-
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
     $(document).ready(function() {
-        $('.js-example-basic-single').select2();
-
-        const btnAgregarElemento = document.getElementById('btnAgregarElemento');
-        const formulario = document.getElementById('formularioOrden');
-        let contadorSelect = 1;
-
-        btnAgregarElemento.addEventListener('click', function() {
-            agregarElemento();
-        });
-
-        function agregarElemento() {
-            const contenedorElementos = document.getElementById('contenedorElementos');
-            const nuevoElemento = document.createElement('div');
-            nuevoElemento.className = 'input-group input-group-elemento';
-
-            nuevoElemento.innerHTML = `
-                <label class="input-group-text" for="inputGroupSelect01">Elemento</label>
-                <select class="form-select js-example-basic-single" name="idElemento" required>
-                    <option value="">Seleccionar</option>
-                    {% for e in elemento %}
-                        <option value="{{ e.id }}">{{ e }}</option>
-                    {% endfor %}
-                </select>
-
-                <input type="number" name="numCantidad" class="form-control" placeholder="Cantidad" min="1" required>
-                <div class="input-group-append">
-                    <button type="button" class="btn btn-outline-secondary btnEliminarElemento">Eliminar</button>
-                </div>
-            `;
-
-            contenedorElementos.appendChild(nuevoElemento);
-
-            // Inicializar el nuevo select2
-            $('.js-example-basic-single').select2();
-        }
-
-        $(document).on('click', '.btnEliminarElemento', function() {
-            $(this).closest('.input-group-elemento').remove();
-        });
-    });
+    $('.js-example-basic-single').select2();
+});
 </script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+
 
 {% endblock %}

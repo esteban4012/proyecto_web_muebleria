@@ -16,4 +16,4 @@ class Orden(models.Model):
     id_elemento = models.ForeignKey(Elementos,on_delete=models.CASCADE, null=False)
 
     def __str__(self):
-        return f"{self.id_cliente.nombre} {self.fecha} " 
+        return f"{self.id_cliente.nombre} {self.id_elemento.descripcion} {self.fecha} " 

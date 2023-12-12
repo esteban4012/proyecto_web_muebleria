@@ -1,3 +1,4 @@
+import json
 from django.shortcuts import render, redirect
 
 from .models import Orden
@@ -19,16 +20,17 @@ def home(request):
 
 def crearOrden(request):
 
-    fecha = request.POST['fecha']
-    cantidad = request.POST['numCantidad']
-    valor_total = request.POST['numValor']
-    id_elemento = request.POST['idElemento']
-    id_cliente = request.POST['idCliente']
+    if request.method == 'POST':
+        fecha = request.POST['fecha']
+        cantidad = request.POST['numCantidad']
+        valor_total = request.POST['numValor']
+        id_elemento = request.POST['idElemento']
+        id_cliente = request.POST['idCliente']
 
-    id_elemento_obj = Elementos.objects.get(pk=id_elemento)
-    id_cliente_obj = Cliente.objects.get(pk=id_cliente)
-    orden = Orden.objects.create(fecha = fecha,cantidad = cantidad, valor_total = valor_total, id_elemento = id_elemento_obj, id_cliente = id_cliente_obj)
-    return redirect('/ordenes/home')
+        id_elemento_obj = Elementos.objects.get(pk=id_elemento)
+        id_cliente_obj = Cliente.objects.get(pk=id_cliente)
+        orden = Orden.objects.create(fecha = fecha,cantidad = cantidad, valor_total = valor_total, id_elemento = id_elemento_obj, id_cliente = id_cliente_obj)
+        return redirect('/ordenes/home')
     
 def editarOrden(request, id):
     orden = Orden.objects.get(id = id)
@@ -66,7 +68,9 @@ def listarOrdenes(request):
     if busqueda:
 
         orden = Orden.objects.filter(
-            Q(id_cliente__nombre = busqueda)
+            Q(id_cliente__nombre = busqueda) |
+            Q(id_cliente__numero_identificacion__icontains = busqueda)
+            
         ).distinct()
 
     else:
